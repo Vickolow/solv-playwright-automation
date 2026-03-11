@@ -1,21 +1,11 @@
-export class WorkerLoginPage {
+import { test } from '@playwright/test';
+import { EmployerLoginPage } from '../../pages/employer/login.page.js';
 
-  constructor(page) {
-    this.page = page
+test('Employer login', async ({ page }) => {
 
-    this.emailInput = page.locator('#email')
-    this.passwordInput = page.locator('#password')
-    this.loginButton = page.locator('button[type="submit"]')
-  }
+  const employerLogin = new EmployerLoginPage(page);
 
-  async goto() {
-    await this.page.goto('https://solv-worker-dev-fe.onrender.com/')
-  }
+  await employerLogin.goto();
+  await employerLogin.login('employer@email.com', 'password123');
 
-  async login(email, password) {
-    await this.emailInput.fill(email)
-    await this.passwordInput.fill(password)
-    await this.loginButton.click()
-  }
-
-}
+});
