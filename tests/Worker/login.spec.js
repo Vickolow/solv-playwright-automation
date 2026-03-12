@@ -1,16 +1,17 @@
-import { test } from '@playwright/test'
-import { WorkerLoginPage } from '../../pages/worker/login.page.js'
+import { test, expect } from '@playwright/test'
+import { WorkerLoginPage } from '../../pages/worker/login.page'
 import users from '../../test-data/users.json'
 
 test('Worker should login successfully', async ({ page }) => {
 
-const loginPage = new WorkerLoginPage(page)
+  const workerLogin = new WorkerLoginPage(page)
 
-await loginPage.goto()
+  await workerLogin.goto()
 
-await loginPage.login(
-users.worker.email,
-users.worker.password
-)
+  await workerLogin.login(
+    users.worker.email,
+    users.worker.password
+  )
 
+  await expect(page).toHaveURL(/dashboard/)
 })

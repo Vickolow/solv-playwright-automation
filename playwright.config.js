@@ -2,31 +2,39 @@
 import { defineConfig, devices } from '@playwright/test';
 
 /**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
-
-/**
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
+  // Scan all subfolders under "tests" for test files
   testDir: './tests',
+
+  // File patterns Playwright should recognize as tests
+  testMatch: '**/*.spec.js',  // scans any .spec.js in subfolders
+
+  // Reporter configuration
   reporter: 'html',
+
+  // Shared settings for all tests
   use: {
     retries: 2,
     trace: 'on-first-retry',
-    screenshot:"on-first-failure",
+    screenshot: 'on-first-failure',
   },
 
-  /* Configure projects for major browsers */
+  // Projects for different browsers/devices
   projects: [
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
+    // Optional: add Firefox or WebKit if needed
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
   ],
 });
-
